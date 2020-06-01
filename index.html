@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./js/app.js" defer></script>
+</head>
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    position: relative;
+  }
+
+  section {
+    padding: 16px;
+    border: 16px solid rgba(34, 34, 34, 0.3);
+    margin-bottom: 24px;
+  }
+
+  section:first-of-type {
+    max-height: 200px;
+    overflow: auto;
+  }
+
+  .rectangle {
+    width: 120px;
+    height: 80px;
+    background-color: lawngreen;
+  }
+
+  .note {
+    width: 150px;
+    height: 200px;
+    background-color: #999;
+  }
+</style>
+
+<body>
+  
+
+  <button id="newNoteBtn">Новая заметка</button>
+
+  <div class="container"></div>
+</body>
+
+</html>

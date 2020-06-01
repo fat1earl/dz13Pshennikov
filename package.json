@@ -1,0 +1,23 @@
+{
+  "name": "dz13N",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fat1earl/dz13Pshennikov.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fat1earl/dz13Pshennikov/issues"
+  },
+  "homepage": "https://github.com/fat1earl/dz13Pshennikov#readme"
+}
