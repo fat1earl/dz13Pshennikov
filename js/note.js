@@ -14,14 +14,10 @@ export class Note {
     this._init();
     console.log(this.data);
     console.log(this.button);
-    // console.log(this._init());
   }
-  // console.log(this.data);
- 
 
   _init() {
     this.button.addEventListener('click', this._handleClickButton);
-    // this.btnCloseNode.addEventListener('click', this._closeNote);
   }
   _closeNote(event) {
     const noteEvent = event.currentTarget.parentNode;
@@ -32,11 +28,6 @@ export class Note {
     console.log(this.data.splice(noteIndex, 1));
 
   }
-
-  
-
-
-
 
   // метод для записи координат в data, передаём его в класс DnD
   _setCoords(note, coords) {
@@ -86,16 +77,24 @@ export class Note {
     contentNode.innerHTML = data.content;
 
 
+
+    ////////начало работы над текст ареа
+    const btnOpenTextArea = textAreaNode.cloneNode(true);
+    btnOpenTextArea.classList.add('text__area');
+    btnOpenTextArea.innerHTML = 'Add';
+    btnOpenTextArea.addEventListener('click', this._handleAddText);
+
+
+
+
+
+
     noteNode.append(btnCloseNode, contentNode)
 
     return noteNode;
   }
   
   
-  // console.log(this._closeNote());
-  
- 
-    
 
   render() {
     this.container.innerHTML = ''; // очищаем контейнер перед каждым рендером
