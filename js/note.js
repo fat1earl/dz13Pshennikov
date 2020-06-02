@@ -7,8 +7,6 @@ export class Note {
     this.button = button;
 
     this._handleClickButton = this._clickButton.bind(this);
-    // this._handleCloseNote = this._closeNote.bind(this);
-
     this.setCoords = this._setCoords.bind(this);
 
     this._init();
@@ -18,17 +16,6 @@ export class Note {
 
   _init() {
     this.button.addEventListener("click", this._handleClickButton);
-  }
-  _closeNote(index) {
-    this.data.splice(index, 1);
-    this.render();
-
-    // const noteEvent = event.currentTarget.parentNode;
-    // const noteIndex = noteEvent.getAttribute('data-index');
-
-    // this.data.splice(noteIndex, 1);
-    // noteEvent.remove();
-    // console.log(this.data.splice(noteIndex, 1));
   }
 
   // метод для записи координат в data, передаём его в класс DnD
@@ -68,27 +55,44 @@ export class Note {
     noteNode.style.cssText = `position: absolute; top: ${data.top}px; left: ${data.left}px;`;
     new DnD(noteNode, this.setCoords);
 
+    noteNode.addEventListener("dblclick", () => {
+      this._editNote(textAreaNode, contentNode, index);
+    });
+
     const btnCloseNode = buttonNode.cloneNode(true);
     btnCloseNode.classList.add("note__close");
     btnCloseNode.innerHTML = "X";
     btnCloseNode.addEventListener("click", () => {
       this._closeNote(index);
     });
-    // btnCloseNode.addEventListener("click", this._closeNote(index));
 
     const contentNode = divNode.cloneNode(true);
     contentNode.classList.add("note__content");
     contentNode.innerHTML = data.content;
 
-    ////////начало работы над текст ареа
-    const btnOpenTextArea = textAreaNode.cloneNode(true);
-    btnOpenTextArea.classList.add("text__area");
-    btnOpenTextArea.innerHTML = "Add";
-    btnOpenTextArea.addEventListener("click", this._handleAddText);
+    textAreaNode.classList.add("note__textarea");
+    textAreaNode.hidden = true;
+    textAreaNode.value = data.content;
 
-    noteNode.append(btnCloseNode, contentNode);
+    noteNode.append(btnCloseNode, contentNode, textAreaNode);
 
     return noteNode;
+  }
+  _editNote(textAreaNode, contentNode, index) {
+    if (textAreaNode.hidden) {
+      textAreaNode.hidden = false;
+      contentNode.hidden = true;
+    } else {
+      textAreaNode.hidden = true;
+      contentNode.hidden = false;
+      this.data[index] = textAreaNode.value;
+      this.render();
+    }
+    // console.log(textAreaNode, contentNode, index);
+  }
+  _closeNote(index) {
+    this.data.splice(index, 1);
+    this.render();
   }
 
   render() {
