@@ -1,9 +1,9 @@
-import { DnD } from './dnd';
+import { DnD } from "./dnd";
 
 export class Note {
   constructor(button) {
     this.data = [];
-    this.container = document.querySelector('.container');
+    this.container = document.querySelector(".container");
     this.button = button;
 
     this._handleClickButton = this._clickButton.bind(this);
@@ -15,11 +15,11 @@ export class Note {
   }
 
   _init() {
-    this.button.addEventListener('click', this._handleClickButton);
+    this.button.addEventListener("click", this._handleClickButton);
   }
 
   _setCoords(note, coords) {
-    const index = note.getAttribute('data-index');
+    const index = note.getAttribute("data-index");
 
     this.data[index].left = coords.x;
     this.data[index].top = coords.y;
@@ -35,57 +35,61 @@ export class Note {
   }
 
   _clickButton() {
-    const newNoteObj = this._constructorNote('New note', 48, 24);
+    const newNoteObj = this._constructorNote(
+      "Double click to add or save New Note",
+      48,
+      24
+    );
     this.data.push(newNoteObj);
 
     this.render();
   }
 
   _createNote(data, index) {
-    const [divNode, buttonNode, textAreaNode] = [
-      document.createElement('div'),
-      document.createElement('button'),
-      document.createElement('textarea'),
+    const [divNode, buttonNode, textareaNode] = [
+      document.createElement("div"),
+      document.createElement("button"),
+      document.createElement("textarea"),
     ];
 
     const noteNode = divNode.cloneNode(true);
-    noteNode.setAttribute('data-index', index);
-    noteNode.classList.add('note');
+    noteNode.setAttribute("data-index", index);
+    noteNode.classList.add("note");
     noteNode.style.cssText = `position: absolute; top: ${data.top}px; left: ${data.left}px;`;
     new DnD(noteNode, this.setCoords);
+    noteNode.addEventListener("dblclick", () => {
+      this._editNote(textareaNode, contentNode, index);
+    });
 
     const btnCloseNode = buttonNode.cloneNode(true);
-    btnCloseNode.classList.add('note__close');
-    btnCloseNode.innerHTML = 'X';
-    btnCloseNode.addEventListener('click', () => {
+    btnCloseNode.classList.add("note__close");
+    btnCloseNode.innerHTML = "X";
+    btnCloseNode.addEventListener("click", () => {
       this._closeNote(index);
     });
 
     const contentNode = divNode.cloneNode(true);
-    contentNode.classList.add('note__content');
+    contentNode.classList.add("note__content");
+    contentNode.style.cssText = `width: 90%;`;
     contentNode.innerHTML = data.content;
 
-    noteNode.addEventListener('dblclick', () => {
-      this._editNote(textAreaNode, contentNode, index);
-    });
+    textareaNode.classList.add("note__textarea");
+    textareaNode.hidden = true;
+    textareaNode.value = data.content;
 
-    textAreaNode.classList.add('note__textarea');
-    textAreaNode.hidden = true;
-    textAreaNode.value = data.content;
-
-    noteNode.append(btnCloseNode, contentNode, textAreaNode);
+    noteNode.append(btnCloseNode, contentNode, textareaNode);
 
     return noteNode;
   }
 
-  _editNote(textAreaNode, contentNode, index) {
-    if (textAreaNode.hidden) {
-      textAreaNode.hidden = false;
+  _editNote(textareaNode, contentNode, index) {
+    if (textareaNode.hidden) {
+      textareaNode.hidden = false;
       contentNode.hidden = true;
     } else {
-      textAreaNode.hidden = true;
+      textareaNode.hidden = true;
       contentNode.hidden = false;
-      this.data[index] = textAreaNode.value;
+      this.data[index].content = textareaNode.value;
       this.render();
     }
   }
@@ -96,7 +100,7 @@ export class Note {
   }
 
   render() {
-    this.container.innerHTML = '';
+    this.container.innerHTML = "";
 
     this.data.forEach((noteObj, index) => {
       const noteNode = this._createNote(noteObj, index);
