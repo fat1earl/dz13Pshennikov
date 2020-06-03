@@ -36,7 +36,7 @@ export class Note {
   }
 
   _clickButton() {
-    const newNoteObj = this._constructorNote("Hello", 48, 24); // передаём дефолтные значения
+    const newNoteObj = this._constructorNote("New note", 48, 24); // передаём дефолтные значения
     this.data.push(newNoteObj);
 
     this.render();
@@ -54,7 +54,7 @@ export class Note {
     noteNode.classList.add("note");
     noteNode.style.cssText = `position: absolute; top: ${data.top}px; left: ${data.left}px;`;
     new DnD(noteNode, this.setCoords);
-
+    /////// добавить кнопку добавления а не два клика!
     noteNode.addEventListener("dblclick", () => {
       this._editNote(textAreaNode, contentNode, index);
     });
@@ -88,7 +88,6 @@ export class Note {
       this.data[index] = textAreaNode.value;
       this.render();
     }
-    // console.log(textAreaNode, contentNode, index);
   }
   _closeNote(index) {
     this.data.splice(index, 1);
