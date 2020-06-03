@@ -1,9 +1,9 @@
-import { DnD } from "./dnd";
+import { DnD } from './dnd';
 
 export class Note {
   constructor(button) {
     this.data = [];
-    this.container = document.querySelector(".container"); // контейнер, нужен для изоляции заметок от остального html
+    this.container = document.querySelector('.container');
     this.button = button;
 
     this._handleClickButton = this._clickButton.bind(this);
@@ -15,16 +15,15 @@ export class Note {
   }
 
   _init() {
-    this.button.addEventListener("click", this._handleClickButton);
+    this.button.addEventListener('click', this._handleClickButton);
   }
 
-  // метод для записи координат в data, передаём его в класс DnD
   _setCoords(note, coords) {
-    const index = note.getAttribute("data-index");
+    const index = note.getAttribute('data-index');
 
     this.data[index].left = coords.x;
     this.data[index].top = coords.y;
-    console.log(this.data); // если вызвать в контексте класса Note в другом классе, есть доступ к data
+    console.log(this.data);
   }
 
   _constructorNote(content, top, left) {
@@ -36,7 +35,7 @@ export class Note {
   }
 
   _clickButton() {
-    const newNoteObj = this._constructorNote("New note", 48, 24); // передаём дефолтные значения
+    const newNoteObj = this._constructorNote('New note', 48, 24);
     this.data.push(newNoteObj);
 
     this.render();
@@ -44,33 +43,33 @@ export class Note {
 
   _createNote(data, index) {
     const [divNode, buttonNode, textAreaNode] = [
-      document.createElement("div"),
-      document.createElement("button"),
-      document.createElement("textarea"),
+      document.createElement('div'),
+      document.createElement('button'),
+      document.createElement('textarea'),
     ];
 
     const noteNode = divNode.cloneNode(true);
-    noteNode.setAttribute("data-index", index); // index нужен, чтобы найти объект в массиве data
-    noteNode.classList.add("note");
+    noteNode.setAttribute('data-index', index);
+    noteNode.classList.add('note');
     noteNode.style.cssText = `position: absolute; top: ${data.top}px; left: ${data.left}px;`;
     new DnD(noteNode, this.setCoords);
-    /////// добавить кнопку добавления а не два клика!
-    noteNode.addEventListener("dblclick", () => {
-      this._editNote(textAreaNode, contentNode, index);
-    });
 
     const btnCloseNode = buttonNode.cloneNode(true);
-    btnCloseNode.classList.add("note__close");
-    btnCloseNode.innerHTML = "X";
-    btnCloseNode.addEventListener("click", () => {
+    btnCloseNode.classList.add('note__close');
+    btnCloseNode.innerHTML = 'X';
+    btnCloseNode.addEventListener('click', () => {
       this._closeNote(index);
     });
 
     const contentNode = divNode.cloneNode(true);
-    contentNode.classList.add("note__content");
+    contentNode.classList.add('note__content');
     contentNode.innerHTML = data.content;
 
-    textAreaNode.classList.add("note__textarea");
+    noteNode.addEventListener('dblclick', () => {
+      this._editNote(textAreaNode, contentNode, index);
+    });
+
+    textAreaNode.classList.add('note__textarea');
     textAreaNode.hidden = true;
     textAreaNode.value = data.content;
 
@@ -78,6 +77,7 @@ export class Note {
 
     return noteNode;
   }
+
   _editNote(textAreaNode, contentNode, index) {
     if (textAreaNode.hidden) {
       textAreaNode.hidden = false;
@@ -89,27 +89,19 @@ export class Note {
       this.render();
     }
   }
+
   _closeNote(index) {
     this.data.splice(index, 1);
     this.render();
   }
 
   render() {
-    this.container.innerHTML = ""; // очищаем контейнер перед каждым рендером
+    this.container.innerHTML = '';
 
     this.data.forEach((noteObj, index) => {
       const noteNode = this._createNote(noteObj, index);
 
       this.container.append(noteNode);
     });
-  }
-}
-console.log(data)
-
-function elseSearch(){
-  if(data !=0)
-  } 
-  else {
-    return 0
   }
 }
