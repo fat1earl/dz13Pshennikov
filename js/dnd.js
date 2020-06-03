@@ -25,7 +25,7 @@ export class DnD {
 
     this.shiftX = event.clientX - elemRect.left;
     this.shiftY = event.clientY - elemRect.top;
-    this._trackMouse(event.pageX, event.pageY)
+    this._trackMouse(event.pageX, event.pageY);
 
     document.addEventListener('mousemove', this._handleMouseMove);
     document.addEventListener('mouseup', this._handleMouseUp);
@@ -38,7 +38,7 @@ export class DnD {
     // если метод передали в класс, то вызываем его при отжатии клавиши
     if (this.methodSetCoords != null) {
       // передаём элемент который перемещали и координаты его текущей позиции
-      this.methodSetCoords(this.elem, {x: this.left, y: this.top})
+      this.methodSetCoords(this.elem, { x: this.left, y: this.top });
     }
   }
 
@@ -50,7 +50,7 @@ export class DnD {
     this.left = pageX - this.shiftX;
     this.top = pageY - this.shiftY;
 
-    this.elem.style.left = this.left + 'px';
-    this.elem.style.top = this.top + 'px';
+    this.elem.style.left = `${this.left}px`;
+    this.elem.style.top = `${this.top}px`;
   }
 }

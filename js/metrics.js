@@ -30,7 +30,7 @@ class Metrics {
   }
 }
 
-export {Metrics};
+export { Metrics };
 
 
 // scrollTo, scrollBy, scrollIntoView

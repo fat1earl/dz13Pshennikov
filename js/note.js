@@ -104,3 +104,12 @@ export class Note {
     });
   }
 }
+console.log(data)
+
+function elseSearch(){
+  if(data !=0)
+  } 
+  else {
+    return 0
+  }
+}

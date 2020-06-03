@@ -38,7 +38,7 @@
 // mouseup - отпускание левой клавиши мыши
 
 // Note
-import {Note} from './note';
+import { Note } from './note';
 
 const newNoteBtnNode = document.querySelector('#newNoteBtn');
 
